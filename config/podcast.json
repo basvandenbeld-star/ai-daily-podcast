@@ -16,11 +16,13 @@
   "siteDir": "docs",
   "dataDir": ".data",
   "tts": {
-    "engine": "macos-say",
+    "engine": "piper",
     "voice": "Xander",
     "fallbackVoices": ["Ellen"],
     "wordsPerMinute": 150,
-    "speechRate": 180
+    "speechRate": 168,
+    "piperModelPath": "models/piper/nl_NL-mls-medium.onnx",
+    "piperConfigPath": "models/piper/nl_NL-mls-medium.onnx.json"
   },
   "interests": [
     "OpenAI",

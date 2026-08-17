@@ -25,12 +25,24 @@ Onderzochte route:
 - Piper: gratis en lokaal, maar Nederlandse stemmen moeten per stem getest worden; recente signalen rond `nl_NL`-kwaliteit zijn wisselend.
 - macOS `say`: gratis, lokaal, accountloos, direct beschikbaar op deze Mac met `Xander` (`nl_NL`) en `Ellen` (`nl_BE`).
 
-Huidige default: `Xander`.
+Huidige default: Piper `nl_NL-mls-medium`.
+
+Eenmalige lokale Piper setup:
+
+```bash
+uv tool install piper-tts
+mkdir -p models/piper
+curl -L --fail -o models/piper/nl_NL-mls-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/main/nl/nl_NL/mls/medium/nl_NL-mls-medium.onnx
+curl -L --fail -o models/piper/nl_NL-mls-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/main/nl/nl_NL/mls/medium/nl_NL-mls-medium.onnx.json
+```
+
+De modelbestanden staan lokaal in `models/` en worden niet naar GitHub gepusht.
 
 De testbestanden staan in:
 
 - `samples/tts-xander.mp3`
 - `samples/tts-ellen.mp3`
+- `samples/tts-piper-nl_NL-mls-medium.mp3`
 - `samples/tts-evaluation.md`
 
 Nieuwe test draaien:

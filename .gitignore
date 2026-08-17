@@ -4,5 +4,6 @@ node_modules
 .env.local
 .data
 bin/run-daily.sh
+models
 dist
 *.tsbuildinfo

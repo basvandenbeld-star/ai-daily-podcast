@@ -8,7 +8,7 @@ import { addEpisodeToState, readState, withLock, writeState } from "./state.js";
 import { fetchCandidates } from "./fetch.js";
 import { clusterStories, selectStories } from "./cluster.js";
 import { buildDescription, buildEpisodeScript, buildShowNotes } from "./script.js";
-import { assertAudioValid, synthesizeMacSpeech } from "./audio.js";
+import { assertAudioValid, synthesizeSpeech } from "./audio.js";
 import { slugify } from "./text.js";
 import { writeStaticSite } from "./rss.js";
 import type { Episode } from "./types.js";
@@ -53,10 +53,13 @@ export async function generateEpisode(options: { force?: boolean; now?: Date } =
     const feedToken = requireEnv(config.feedTokenEnv);
     const audioUrl = `${publicBaseUrl}/${audioRelative}`;
 
-    const audio = await synthesizeMacSpeech({
+    const audio = await synthesizeSpeech({
+      engine: config.tts.engine,
       text: scriptResult.script,
       voice: config.tts.voice,
       speechRate: config.tts.speechRate,
+      piperModelPath: config.tts.piperModelPath,
+      piperConfigPath: config.tts.piperConfigPath,
       outputMp3: audioPath
     });
     await assertAudioValid(audioPath, config.targetMinutes.max * 60);

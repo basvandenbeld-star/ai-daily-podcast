@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { synthesizeMacSpeech } from "../src/audio.js";
+import { synthesizeMacSpeech, synthesizePiperSpeech } from "../src/audio.js";
 import { readPodcastConfig } from "../src/config.js";
 
 const config = await readPodcastConfig();
@@ -22,6 +22,17 @@ for (const voice of voices) {
   results.push({ voice, file, ...audio });
 }
 
+if (config.tts.piperModelPath && config.tts.piperConfigPath) {
+  const piperFile = path.join(outDir, "tts-piper-nl_NL-mls-medium.mp3");
+  const audio = await synthesizePiperSpeech({
+    text: fragment,
+    modelPath: config.tts.piperModelPath,
+    configPath: config.tts.piperConfigPath,
+    outputMp3: piperFile
+  });
+  results.push({ voice: "Piper nl_NL mls medium", file: piperFile, ...audio });
+}
+
 const report = `# Lokale TTS vergelijking
 
 Fragment:
@@ -32,7 +43,7 @@ Geteste stemmen:
 
 ${results.map((item) => `- ${item.voice}: ${item.file} (${item.durationSeconds}s, ${item.bytes} bytes)`).join("\n")}
 
-Voorlopige keuze: ${config.tts.voice}.
+Voorlopige keuze in configuratie: ${config.tts.engine === "piper" ? "Piper nl_NL mls medium" : config.tts.voice}.
 
 Beoordelingscriteria voor de definitieve keuze:
 
@@ -41,7 +52,7 @@ Beoordelingscriteria voor de definitieve keuze:
 - Uitspraak van Engelse AI-termen zoals OpenAI, Claude Code, Gemini, Vercel AI SDK en agents.
 - Rustig genoeg voor telefoon en auto.
 
-Opmerking: Kokoro is onderzocht maar de gangbare open-source CLI ondersteunt momenteel geen Nederlandse stemmen. Piper ondersteunt Nederlands, maar recente gebruikersrapporten noemen problemen met meerdere nl_NL-stemmen. Daarom is macOS \`say\` nu de standaard, met Piper als optionele experimentele adapter.
+Opmerking: Kokoro is onderzocht maar de gangbare open-source CLI ondersteunt momenteel geen Nederlandse stemmen. Piper ondersteunt Nederlands en is nu als gratis lokale engine toegevoegd. Coqui XTTS v2 klinkt vaak natuurlijker, maar de modellicentie is non-commercial en valt daarom buiten de harde eis voor een vrije, accountloze engine.
 `;
 await fs.writeFile(path.join(outDir, "tts-evaluation.md"), report, "utf8");
 console.log(JSON.stringify(results, null, 2));

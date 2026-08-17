@@ -20,7 +20,7 @@ await fs.writeFile(
   runner,
   `#!/bin/bash
 set -euo pipefail
-export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="${os.homedir()}/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 cd "${cwd}"
 "${npmPath}" run generate
 "${npmPath}" run publish || true

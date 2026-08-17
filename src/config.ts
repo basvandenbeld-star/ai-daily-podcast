@@ -25,7 +25,9 @@ const podcastSchema = z.object({
     voice: z.string(),
     fallbackVoices: z.array(z.string()),
     wordsPerMinute: z.number(),
-    speechRate: z.number()
+    speechRate: z.number(),
+    piperModelPath: z.string().optional(),
+    piperConfigPath: z.string().optional()
   }),
   interests: z.array(z.string()),
   lowerPriorityPatterns: z.array(z.string())

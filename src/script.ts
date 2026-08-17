@@ -8,8 +8,8 @@ function shortSummary(story: StoryCluster) {
     .replace(/^arXiv:\S+\s+Announce Type:\s+\w+\s+Abstract:\s*/i, "")
     .replace(/\\emph\{([^}]+)\}/g, "$1")
     .replace(/\s+/g, " ");
-  if (text.length <= 620) return text;
-  return `${text.slice(0, 617).replace(/\s+\S*$/, "")}...`;
+  if (text.length <= 820) return text;
+  return `${text.slice(0, 817).replace(/\s+\S*$/, "")}...`;
 }
 
 function whyRelevant(story: StoryCluster) {
@@ -201,13 +201,116 @@ function concreteChecklistEnglish(story: StoryCluster) {
   return "A small experiment for today: write down what decision you would make differently if this story turns out to be true and important. If nothing concrete comes out, it is probably interesting news, but not an action item.";
 }
 
+function sparseDayDeepDiveEnglish(story: StoryCluster) {
+  const text = `${story.title} ${story.summary}`.toLowerCase();
+  const isAgent = text.includes("agent") || text.includes("workflow") || text.includes("tool");
+  const isCoding = text.includes("coding") || text.includes("developer") || text.includes("github") || text.includes("codex") || text.includes("claude code");
+  const isModel = text.includes("model") || text.includes("benchmark") || text.includes("multimodal") || text.includes("voice");
+  const isPaper = story.sources.some((source) => source.sourceName.toLowerCase().includes("arxiv") || source.url.includes("arxiv.org"));
+
+  const interpretation = isPaper
+    ? "Because this is a research item, I would separate the useful idea from the level of proof. A paper can name a real problem before it gives you a production-ready answer. So the right response is not: copy the method tomorrow. The better response is: does this describe a failure mode I already see in my own work?"
+    : "Because this is a product or ecosystem signal, I would separate the announced fact from the implied direction. The announcement tells you what exists now. The more interesting question is whether it changes the shape of the work around it: setup, maintenance, review, cost, or trust.";
+
+  const workflow = isAgent
+    ? "For agent workflows, the practical layer is especially important. Agents are rarely expensive or risky because of one single model response. They become expensive or risky because they loop, retry, call tools, keep too much context, or take action with too little certainty. That means the real design object is the full run: inputs, permissions, intermediate checks, logs, fallbacks, and the point where a human should take over."
+    : isCoding
+      ? "For AI coding, the practical layer is not just whether the assistant can produce code. The real question is whether it reduces the total cycle: understanding the issue, changing the right files, running the right tests, explaining the trade-offs, and leaving a diff that is easy to review. A faster first draft is useful only if it does not quietly increase the review debt."
+      : isModel
+        ? "For model and interface news, the practical layer is adoption friction. A model can be better on paper and still change very little if it is hard to access, slow in real tasks, too costly at scale, or awkward to fit into existing workflows. The test is whether it removes a step you currently feel, not whether the demo is impressive."
+        : "For day-to-day work, the practical layer is workflow change. If this does not alter a decision, a tool choice, a teaching example, a client explanation, or the way you evaluate AI output, then it may be intellectually interesting but operationally small.";
+
+  const critical = isPaper
+    ? "What I would not conclude yet: that this is settled evidence for one specific vendor, model, or implementation. With papers, the danger is treating a narrow setup as a universal rule. The value is often in the framing: it gives you a better question to ask when you evaluate your own tools."
+    : "What I would not conclude yet: that every claim around this will survive contact with daily use. AI releases often sound larger at launch than they feel after a week of real work. The sensible stance is interested, but empirical: test the narrow use case that matters to you.";
+
+  const experiment = isAgent || isCoding
+    ? "A concrete test would be to choose one real task from your week and run it twice. Once with your current workflow, once with the new idea in mind. Time the full cycle, including checking, fixing, and documenting. Then ask one blunt question: did this reduce cognitive load, or did it just move the effort into review?"
+    : "A concrete test would be to pick one real communication or education task: explain a concept, prepare a short session, make a prototype, or compare sources. Then watch where the new capability helps. Does it make the first version better, make iteration faster, or make the result easier to trust?";
+
+  const watch = "The signal to watch next is not another announcement. It is repeatable use. Look for examples where people show the full workflow, including mistakes and constraints. Also watch whether the idea appears in documentation, pricing, SDKs, integrations, or classroom practice. That is usually where AI news moves from interesting to actually useful.";
+
+  return [interpretation, workflow, critical, experiment, watch].join(" ");
+}
+
+function singleStoryExtraLayerEnglish(story: StoryCluster) {
+  const text = `${story.title} ${story.summary}`.toLowerCase();
+  const isAgent = text.includes("agent") || text.includes("workflow") || text.includes("tool");
+  const isCoding = text.includes("coding") || text.includes("developer") || text.includes("github") || text.includes("codex") || text.includes("claude code");
+  const isEducation = text.includes("education") || text.includes("learning") || text.includes("literacy") || text.includes("classroom");
+
+  const communication = isEducation
+    ? "For education, the useful teaching angle is judgment. I would not turn this into a lesson about one tool. I would turn it into a lesson about how you inspect an AI system: what input it received, what it tried, where it failed, what evidence supports the output, and where a human still needs to decide."
+    : "For communication and coaching, the useful angle is how to explain the difference between a capability and a workflow. People often ask whether a model can do something. The sharper question is whether the surrounding process makes the result dependable enough for the context: a class, a client, a publication, or a software change.";
+
+  const implementation = isAgent || isCoding
+    ? "If you want to turn this into something operational, I would start with a small evaluation harness. Pick five representative tasks, keep the inputs stable, and record the full run: prompts, tool calls, retries, model switches, time spent, failures, and human interventions. That gives you a much better signal than a single impressive demo. Especially with coding agents, the best metric is not lines generated. It is the number of review questions that disappear."
+    : "If you want to turn this into something operational, I would start with a repeatable comparison. Pick a task you already do, define what good looks like, and run the old and new workflow side by side. Keep the scoring simple: time saved, quality of first draft, amount of correction needed, and confidence in the final result.";
+
+  const boundary = "The boundary to keep in mind is that today's item is a signal, not a mandate. It earns attention because it points at a real direction in AI work. It does not earn automatic adoption. The practical move is to convert the news into one small test, one note for your mental model, and maybe one example you can use when explaining AI maturity to others. Tomorrow, the useful follow-up question is simple: did this change how you judged a workflow, or did it only give you another interesting thing to mention?";
+
+  return [communication, implementation, boundary].join(" ");
+}
+
+function sparseDayDeepDiveDutch(story: StoryCluster) {
+  const text = `${story.title} ${story.summary}`.toLowerCase();
+  const isAgent = text.includes("agent") || text.includes("workflow") || text.includes("tool");
+  const isCoding = text.includes("coding") || text.includes("developer") || text.includes("github") || text.includes("codex") || text.includes("claude code");
+  const isModel = text.includes("model") || text.includes("benchmark") || text.includes("multimodal") || text.includes("voice");
+  const isPaper = story.sources.some((source) => source.sourceName.toLowerCase().includes("arxiv") || source.url.includes("arxiv.org"));
+
+  const interpretation = isPaper
+    ? "Omdat dit een research-item is, zou ik het idee scheiden van het bewijsniveau. Een paper kan een echt probleem scherp benoemen zonder dat de oplossing morgen productierijp is. De vraag is dus niet: moet je deze methode meteen kopieren? De betere vraag is: beschrijft dit een foutmodus die je al in je eigen werk ziet?"
+    : "Omdat dit een product- of ecosysteemsignaal is, zou ik het feit scheiden van de richting. De aankondiging vertelt wat er nu bestaat. Interessanter is of het werk eromheen verandert: setup, onderhoud, controle, kosten of vertrouwen.";
+
+  const workflow = isAgent
+    ? "Voor agent-workflows is die praktische laag extra belangrijk. Agents zijn zelden duur of riskant door een enkel modelantwoord. Ze worden duur of riskant doordat ze loopen, opnieuw proberen, tools aanroepen, te veel context meeslepen of handelen met te weinig zekerheid. Het echte ontwerpobject is dus de volledige run: input, rechten, tussenchecks, logs, fallback en het moment waarop een mens moet overnemen."
+    : isCoding
+      ? "Voor AI-coding gaat het niet alleen om de vraag of de assistent code kan maken. De echte vraag is of de totale cyclus korter wordt: issue begrijpen, de juiste bestanden aanpassen, de juiste tests draaien, keuzes uitleggen en een diff achterlaten die makkelijk te reviewen is. Een snelle eerste versie is pas waardevol als de reviewlast niet stilletjes groeit."
+      : isModel
+        ? "Bij model- en interfacenieuws zit de praktische vraag in adoptiefrictie. Een model kan op papier beter zijn en toch weinig veranderen als toegang lastig is, taken traag zijn, kosten oplopen of de integratie niet in bestaande workflows past. De test is of het een stap wegneemt die je nu echt voelt."
+        : "Voor dagelijks werk draait de praktische laag om workflowverandering. Als dit geen beslissing, toolkeuze, onderwijsvoorbeeld, klantuitleg of evaluatie van AI-output verandert, is het misschien interessant maar operationeel klein.";
+
+  const critical = isPaper
+    ? "Wat ik hier nog niet uit zou concluderen: dat dit hard bewijs is voor een specifieke leverancier, modelkeuze of implementatie. Bij papers is het risico dat je een smalle onderzoeksopzet te snel als algemene regel behandelt. De waarde zit vaak in de betere vraag die je ermee aan je eigen tools kunt stellen."
+    : "Wat ik hier nog niet uit zou concluderen: dat alle claims overeind blijven in dagelijks gebruik. AI-releases klinken bij lancering vaak groter dan ze na een week werk voelen. De verstandige houding is nieuwsgierig maar empirisch: test de kleine toepassing die voor jou telt.";
+
+  const experiment = isAgent || isCoding
+    ? "Een concrete test is om een echte taak uit je week twee keer te doen. Een keer met je huidige workflow, een keer met dit idee in je achterhoofd. Meet de hele cyclus, inclusief controleren, herstellen en documenteren. Stel daarna de botte vraag: verlaagde dit de cognitieve belasting, of verschoof het werk vooral naar review?"
+    : "Een concrete test is om een echte communicatie- of onderwijstaak te pakken: een concept uitleggen, een korte sessie voorbereiden, een prototype maken of bronnen vergelijken. Kijk waar de nieuwe mogelijkheid helpt. Wordt de eerste versie beter, itereren sneller, of het resultaat makkelijker te vertrouwen?";
+
+  const watch = "Het signaal om nu te volgen is niet de volgende aankondiging, maar herhaalbaar gebruik. Let op voorbeelden waarin mensen de volledige workflow laten zien, inclusief fouten en beperkingen. Kijk ook of het idee opduikt in documentatie, prijzen, SDKs, integraties of onderwijspraktijk. Daar verschuift AI-nieuws meestal van interessant naar werkelijk bruikbaar.";
+
+  return [interpretation, workflow, critical, experiment, watch].join(" ");
+}
+
+function singleStoryExtraLayerDutch(story: StoryCluster) {
+  const text = `${story.title} ${story.summary}`.toLowerCase();
+  const isAgent = text.includes("agent") || text.includes("workflow") || text.includes("tool");
+  const isCoding = text.includes("coding") || text.includes("developer") || text.includes("github") || text.includes("codex") || text.includes("claude code");
+  const isEducation = text.includes("education") || text.includes("learning") || text.includes("literacy") || text.includes("classroom");
+
+  const communication = isEducation
+    ? "Voor onderwijs is de nuttige invalshoek beoordelingsvermogen. Ik zou dit niet gebruiken als les over een tool, maar als les over hoe je een AI-systeem inspecteert: welke input kreeg het, wat probeerde het, waar ging het mis, welk bewijs ondersteunt de output en waar moet een mens blijven beslissen?"
+    : "Voor communicatie en coaching is de nuttige invalshoek het verschil tussen een mogelijkheid en een workflow. Mensen vragen vaak of een model iets kan. De scherpere vraag is of het proces eromheen het resultaat betrouwbaar genoeg maakt voor de context: een les, een klant, een publicatie of een softwarewijziging.";
+
+  const implementation = isAgent || isCoding
+    ? "Als je dit operationeel wilt maken, zou ik beginnen met een klein evaluatiesetje. Kies vijf representatieve taken, houd de input stabiel en leg de volledige run vast: prompts, toolcalls, retries, modelwissels, tijd, fouten en menselijke interventies. Dat geeft veel meer signaal dan een enkele indrukwekkende demo. Zeker bij coding agents is de beste maatstaf niet hoeveel regels code verschijnen, maar hoeveel reviewvragen verdwijnen."
+    : "Als je dit operationeel wilt maken, zou ik beginnen met een herhaalbare vergelijking. Pak een taak die je toch al doet, definieer wat goed genoeg is en draai de oude en nieuwe workflow naast elkaar. Houd de score simpel: tijdwinst, kwaliteit van de eerste versie, hoeveelheid correctiewerk en vertrouwen in het eindresultaat.";
+
+  const boundary = "De grens om te onthouden: het item van vandaag is een signaal, geen opdracht. Het verdient aandacht omdat het een echte richting in AI-werk aanwijst. Het verdient nog geen automatische adoptie. De praktische stap is om het nieuws om te zetten in een kleine test, een notitie voor je mentale model en misschien een voorbeeld dat je kunt gebruiken wanneer je AI-volwassenheid aan anderen uitlegt. Morgen is de nuttige vervolgvraag simpel: veranderde dit hoe je een workflow beoordeelde, of gaf het alleen een interessant punt om te noemen?";
+
+  return [communication, implementation, boundary].join(" ");
+}
+
 function buildEnglishEpisodeScript(stories: StoryCluster[], config: PodcastConfig, localDate: string) {
   const date = formatDateForLanguage(localDate, config.language);
   const intro =
     stories.length <= 2
-      ? `Good morning. This is AI Daily for ${date}. Today there are only a few hard, relevant AI developments, so no pile of loose headlines. I will do a short deep dive on what is actually worth your attention.`
+      ? `Good morning. This is AI Daily for ${date}. Today there are only a few hard, relevant AI developments, so no pile of loose headlines. I will do a focused analysis of what is actually worth your attention.`
       : `Good morning. This is AI Daily for ${date}. Here are the most important AI developments from the last day, with a focus on what changes in practice.`;
 
+  const shouldDeepDive = stories.length <= 2;
   const parts = stories.map((story, index) => {
     const sourcePhrase =
       story.sourceNames.length === 1
@@ -222,13 +325,15 @@ function buildEnglishEpisodeScript(stories: StoryCluster[], config: PodcastConfi
       workTranslationEnglish(story),
       practicalExperimentEnglish(story),
       concreteChecklistEnglish(story),
+      ...(shouldDeepDive ? [sparseDayDeepDiveEnglish(story)] : []),
+      ...(stories.length === 1 ? [singleStoryExtraLayerEnglish(story)] : []),
       sourceConfidenceEnglish(story),
       criticalNoteEnglish(story)
     ].join(" ");
   });
 
   const outro = stories.length <= 2
-    ? "That is the selection for today. Shorter than ideal, but better one useful development with context than ten minutes of filler. The source links are in the show notes."
+    ? "That is the selection for today. A quieter news day, but still useful when treated as analysis rather than filler. The source links are in the show notes."
     : "That was today's selection. The source links are in the show notes, so you can quickly check the claims yourself.";
   const script = [intro, ...parts, outro].join("\n\n");
 
@@ -297,9 +402,10 @@ export function buildEpisodeScript(stories: StoryCluster[], config: PodcastConfi
   const date = formatDutchDate(localDate);
   const intro =
     stories.length <= 2
-      ? `Goedemorgen. Dit is AI Daily voor ${date}. Vandaag zijn er weinig harde, relevante AI-ontwikkelingen. Daarom geen losse headlinebrij, maar een korte deep-dive op wat wel de moeite waard is.`
+      ? `Goedemorgen. Dit is AI Daily voor ${date}. Vandaag zijn er weinig harde, relevante AI-ontwikkelingen. Daarom geen losse headlinebrij, maar een gerichte analyse van wat wel de moeite waard is.`
       : `Goedemorgen. Dit is AI Daily voor ${date}. Dit zijn de belangrijkste AI-ontwikkelingen van de afgelopen dag, met vooral aandacht voor wat praktisch verandert.`;
 
+  const shouldDeepDive = stories.length <= 2;
   const parts = stories.map((story, index) => {
     const sourcePhrase =
       story.sourceNames.length === 1
@@ -314,13 +420,15 @@ export function buildEpisodeScript(stories: StoryCluster[], config: PodcastConfi
       workTranslation(story),
       practicalExperiment(story),
       concreteChecklist(story),
+      ...(shouldDeepDive ? [sparseDayDeepDiveDutch(story)] : []),
+      ...(stories.length === 1 ? [singleStoryExtraLayerDutch(story)] : []),
       sourceConfidence(story),
       criticalNote(story)
     ].join(" ");
   });
 
   const outro = stories.length <= 2
-    ? "En dat is precies de selectie voor vandaag. Korter dan ideaal, maar liever één nuttige ontwikkeling met context dan tien minuten ruis. De bronlinks staan in de shownotes."
+    ? "En dat is de selectie voor vandaag. Een rustige nieuwsdag, maar nog steeds bruikbaar wanneer je hem behandelt als analyse in plaats van vulling. De bronlinks staan in de shownotes."
     : "Dat was de selectie voor vandaag. De bronlinks staan in de shownotes, zodat je de claims snel zelf kunt controleren.";
   const script = [intro, ...parts, outro].join("\n\n");
 

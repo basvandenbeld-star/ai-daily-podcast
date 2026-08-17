@@ -26,7 +26,7 @@
     "kokoroModelPath": "models/kokoro/kokoro-v1.0.onnx",
     "kokoroVoicesPath": "models/kokoro/voices-v1.0.bin",
     "kokoroLanguage": "en-gb",
-    "kokoroSpeed": 0.95
+    "kokoroSpeed": 0.86
   },
   "interests": [
     "OpenAI",

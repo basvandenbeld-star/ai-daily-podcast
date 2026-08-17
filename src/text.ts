@@ -44,8 +44,8 @@ export function escapeHtml(input: string) {
   return escapeXml(input);
 }
 
-export function forSpeech(input: string) {
-  return input
+export function forSpeech(input: string, language = "nl-NL") {
+  let text = input
     .replace(/https?:\/\/\S+/g, "")
     .replace(/\bOpenAI\b/g, "Open A I")
     .replace(/\bAI\b/g, "A I")
@@ -53,8 +53,11 @@ export function forSpeech(input: string) {
     .replace(/\bSDK\b/g, "S D K")
     .replace(/\bLLM(s)?\b/g, "L L M$1")
     .replace(/\bGPT-?5\b/gi, "G P T vijf")
-    .replace(/\bGPT-?4\.?1\b/gi, "G P T vier punt een")
-    .replace(/\bGemini\b/g, "Dzjemini")
+    .replace(/\bGPT-?4\.?1\b/gi, "G P T vier point one")
     .replace(/\s+/g, " ")
     .trim();
+  if (language.toLowerCase().startsWith("nl")) {
+    text = text.replace(/\bGemini\b/g, "Dzjemini").replace(/\bGPT vijf\b/g, "G P T vijf");
+  }
+  return text;
 }

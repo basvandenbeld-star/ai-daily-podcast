@@ -25,3 +25,11 @@ export function formatDutchDate(localDate: string) {
     timeZone: "Europe/Amsterdam"
   }).format(new Date(Date.UTC(year, month - 1, day, 12)));
 }
+
+export function formatDateForLanguage(localDate: string, language: string) {
+  const [year, month, day] = localDate.split("-").map(Number);
+  return new Intl.DateTimeFormat(language.toLowerCase().startsWith("en") ? "en-GB" : "nl-NL", {
+    dateStyle: "long",
+    timeZone: "Europe/Amsterdam"
+  }).format(new Date(Date.UTC(year, month - 1, day, 12)));
+}

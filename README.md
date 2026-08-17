@@ -25,7 +25,16 @@ Onderzochte route:
 - Piper: gratis en lokaal, maar Nederlandse stemmen moeten per stem getest worden; recente signalen rond `nl_NL`-kwaliteit zijn wisselend.
 - macOS `say`: gratis, lokaal, accountloos, direct beschikbaar op deze Mac met `Xander` (`nl_NL`) en `Ellen` (`nl_BE`).
 
-Huidige default: Piper `nl_NL-mls-medium`.
+Huidige default: Kokoro `bf_emma` in Engels. Dat klinkt op dit moment duidelijk prettiger dan de gratis lokale Nederlandse opties.
+
+Eenmalige lokale Kokoro setup:
+
+```bash
+uv tool install kokoro-tts --python 3.12
+mkdir -p models/kokoro
+curl -L --fail -o models/kokoro/kokoro-v1.0.onnx https://github.com/nazdridoy/kokoro-tts/releases/download/v1.0.0/kokoro-v1.0.onnx
+curl -L --fail -o models/kokoro/voices-v1.0.bin https://github.com/nazdridoy/kokoro-tts/releases/download/v1.0.0/voices-v1.0.bin
+```
 
 Eenmalige lokale Piper setup:
 
@@ -43,6 +52,7 @@ De testbestanden staan in:
 - `samples/tts-xander.mp3`
 - `samples/tts-ellen.mp3`
 - `samples/tts-piper-nl_NL-mls-medium.mp3`
+- `samples/tts-kokoro-bf_emma.mp3`
 - `samples/tts-evaluation.md`
 
 Nieuwe test draaien:

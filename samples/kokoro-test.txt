@@ -1,0 +1,1 @@
+Good morning. This is a short test for a personal AI news podcast. OpenAI, Claude Code, Gemini, Vercel AI SDK, local agents, and model routing should sound clear and comfortable, even during a ten minute episode in the car.

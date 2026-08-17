@@ -1,7 +1,7 @@
 {
   "title": "AI Daily voor Bas",
   "description": "Een persoonlijke dagelijkse AI nieuwspodcast.",
-  "language": "nl-NL",
+  "language": "en-US",
   "author": "Bas van den Beld",
   "timezone": "Europe/Amsterdam",
   "publishAfterLocalHour": 5,
@@ -16,13 +16,17 @@
   "siteDir": "docs",
   "dataDir": ".data",
   "tts": {
-    "engine": "piper",
-    "voice": "Xander",
-    "fallbackVoices": ["Ellen"],
-    "wordsPerMinute": 150,
+    "engine": "kokoro",
+    "voice": "bf_emma",
+    "fallbackVoices": ["af_nicole", "bf_emma", "am_liam", "bm_lewis"],
+    "wordsPerMinute": 160,
     "speechRate": 168,
     "piperModelPath": "models/piper/nl_NL-mls-medium.onnx",
-    "piperConfigPath": "models/piper/nl_NL-mls-medium.onnx.json"
+    "piperConfigPath": "models/piper/nl_NL-mls-medium.onnx.json",
+    "kokoroModelPath": "models/kokoro/kokoro-v1.0.onnx",
+    "kokoroVoicesPath": "models/kokoro/voices-v1.0.bin",
+    "kokoroLanguage": "en-gb",
+    "kokoroSpeed": 0.95
   },
   "interests": [
     "OpenAI",

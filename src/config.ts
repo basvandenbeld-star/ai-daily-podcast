@@ -21,13 +21,17 @@ const podcastSchema = z.object({
   siteDir: z.string(),
   dataDir: z.string(),
   tts: z.object({
-    engine: z.enum(["macos-say", "piper"]),
+    engine: z.enum(["macos-say", "piper", "kokoro"]),
     voice: z.string(),
     fallbackVoices: z.array(z.string()),
     wordsPerMinute: z.number(),
     speechRate: z.number(),
     piperModelPath: z.string().optional(),
-    piperConfigPath: z.string().optional()
+    piperConfigPath: z.string().optional(),
+    kokoroModelPath: z.string().optional(),
+    kokoroVoicesPath: z.string().optional(),
+    kokoroLanguage: z.string().optional(),
+    kokoroSpeed: z.number().optional()
   }),
   interests: z.array(z.string()),
   lowerPriorityPatterns: z.array(z.string())

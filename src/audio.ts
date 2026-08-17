@@ -113,15 +113,98 @@ export async function synthesizePiperSpeech(options: {
   };
 }
 
+export async function synthesizeKokoroSpeech(options: {
+  text: string;
+  modelPath: string;
+  voicesPath: string;
+  voice: string;
+  language: string;
+  speed: number;
+  outputMp3: string;
+}) {
+  await fs.mkdir(path.dirname(options.outputMp3), { recursive: true });
+  const tempText = `${options.outputMp3}.txt`;
+  const rawMp3 = `${options.outputMp3}.raw.mp3`;
+  const tempMp3 = `${options.outputMp3}.tmp.mp3`;
+
+  try {
+    await fs.writeFile(tempText, options.text, "utf8");
+    await run("kokoro-tts", [
+      tempText,
+      rawMp3,
+      "--model",
+      options.modelPath,
+      "--voices",
+      options.voicesPath,
+      "--voice",
+      options.voice,
+      "--lang",
+      options.language,
+      "--speed",
+      String(options.speed),
+      "--format",
+      "mp3"
+    ]);
+    await run("ffmpeg", [
+      "-y",
+      "-i",
+      rawMp3,
+      "-vn",
+      "-ac",
+      "1",
+      "-ar",
+      "44100",
+      "-codec:a",
+      "libmp3lame",
+      "-b:a",
+      "96k",
+      "-af",
+      "loudnorm=I=-16:TP=-1.5:LRA=11",
+      tempMp3
+    ]);
+    await fs.rename(tempMp3, options.outputMp3);
+  } finally {
+    await fs.rm(tempText, { force: true });
+    await fs.rm(rawMp3, { force: true });
+    await fs.rm(tempMp3, { force: true });
+  }
+
+  const metadata = await parseFile(options.outputMp3);
+  const stat = await fs.stat(options.outputMp3);
+  return {
+    durationSeconds: Math.round(metadata.format.duration ?? 0),
+    bytes: stat.size
+  };
+}
+
 export async function synthesizeSpeech(options: {
-  engine: "macos-say" | "piper";
+  engine: "macos-say" | "piper" | "kokoro";
   text: string;
   voice: string;
   speechRate: number;
   piperModelPath?: string;
   piperConfigPath?: string;
+  kokoroModelPath?: string;
+  kokoroVoicesPath?: string;
+  kokoroLanguage?: string;
+  kokoroSpeed?: number;
   outputMp3: string;
 }) {
+  if (options.engine === "kokoro") {
+    if (!options.kokoroModelPath || !options.kokoroVoicesPath) {
+      throw new Error("Kokoro requires kokoroModelPath and kokoroVoicesPath.");
+    }
+    return synthesizeKokoroSpeech({
+      text: options.text,
+      modelPath: options.kokoroModelPath,
+      voicesPath: options.kokoroVoicesPath,
+      voice: options.voice,
+      language: options.kokoroLanguage ?? "en-us",
+      speed: options.kokoroSpeed ?? 0.95,
+      outputMp3: options.outputMp3
+    });
+  }
+
   if (options.engine === "piper") {
     if (!options.piperModelPath || !options.piperConfigPath) {
       throw new Error("Piper requires piperModelPath and piperConfigPath.");

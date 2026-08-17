@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
 import { readPodcastConfig, readSources, requireEnv } from "./config.js";
-import { localDateInTimezone, localHourInTimezone, formatDutchDate } from "./time.js";
+import { localDateInTimezone, localHourInTimezone, formatDateForLanguage } from "./time.js";
 import { logEvent } from "./log.js";
 import { addEpisodeToState, readState, withLock, writeState } from "./state.js";
 import { fetchCandidates } from "./fetch.js";
@@ -45,7 +45,7 @@ export async function generateEpisode(options: { force?: boolean; now?: Date } =
       scriptResult = buildEpisodeScript(finalStories, config, localDate);
     }
 
-    const title = `AI Daily, ${formatDutchDate(localDate)}`;
+    const title = `AI Daily, ${formatDateForLanguage(localDate, config.language)}`;
     const episodeSlug = `${localDate}-${slugify(title)}`;
     const audioRelative = `audio/${episodeSlug}.mp3`;
     const audioPath = path.resolve(config.siteDir, audioRelative);
@@ -60,6 +60,10 @@ export async function generateEpisode(options: { force?: boolean; now?: Date } =
       speechRate: config.tts.speechRate,
       piperModelPath: config.tts.piperModelPath,
       piperConfigPath: config.tts.piperConfigPath,
+      kokoroModelPath: config.tts.kokoroModelPath,
+      kokoroVoicesPath: config.tts.kokoroVoicesPath,
+      kokoroLanguage: config.tts.kokoroLanguage,
+      kokoroSpeed: config.tts.kokoroSpeed,
       outputMp3: audioPath
     });
     await assertAudioValid(audioPath, config.targetMinutes.max * 60);

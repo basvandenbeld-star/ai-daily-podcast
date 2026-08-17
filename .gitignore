@@ -3,5 +3,6 @@ node_modules
 .env
 .env.local
 .data
+bin/run-daily.sh
 dist
 *.tsbuildinfo

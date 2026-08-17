@@ -6,19 +6,24 @@ import { spawnSync } from "node:child_process";
 const cwd = process.cwd();
 const label = "local.ai-daily-podcast";
 const plistPath = path.join(os.homedir(), "Library", "LaunchAgents", `${label}.plist`);
-const runner = path.join(cwd, "bin", "run-daily.sh");
+const supportDir = path.join(os.homedir(), "Library", "Application Support", "AI Daily Podcast");
+const logDir = path.join(os.homedir(), "Library", "Logs", "AI Daily Podcast");
+const runner = path.join(supportDir, "run-daily.sh");
+const npmPath = process.env.npm_execpath?.endsWith("npm-cli.js") ? "/usr/local/bin/npm" : "/usr/local/bin/npm";
 
 await fs.mkdir(path.dirname(plistPath), { recursive: true });
-await fs.mkdir(path.join(cwd, "bin"), { recursive: true });
+await fs.mkdir(supportDir, { recursive: true });
+await fs.mkdir(logDir, { recursive: true });
 await fs.mkdir(path.join(cwd, ".data", "logs"), { recursive: true });
 
 await fs.writeFile(
   runner,
   `#!/bin/bash
 set -euo pipefail
+export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 cd "${cwd}"
-/usr/bin/env npm run generate
-/usr/bin/env npm run publish || true
+"${npmPath}" run generate
+"${npmPath}" run publish || true
 `,
   { mode: 0o755 }
 );
@@ -31,10 +36,11 @@ const plist = `<?xml version="1.0" encoding="UTF-8"?>
   <string>${label}</string>
   <key>ProgramArguments</key>
   <array>
+    <string>/bin/bash</string>
     <string>${runner}</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>${cwd}</string>
+  <string>${os.homedir()}</string>
   <key>RunAtLoad</key>
   <true/>
   <key>StartCalendarInterval</key>
@@ -47,9 +53,9 @@ const plist = `<?xml version="1.0" encoding="UTF-8"?>
   <key>StartInterval</key>
   <integer>3600</integer>
   <key>StandardOutPath</key>
-  <string>${path.join(cwd, ".data", "logs", "launchd.out.log")}</string>
+  <string>${path.join(logDir, "launchd.out.log")}</string>
   <key>StandardErrorPath</key>
-  <string>${path.join(cwd, ".data", "logs", "launchd.err.log")}</string>
+  <string>${path.join(logDir, "launchd.err.log")}</string>
 </dict>
 </plist>
 `;

@@ -1,0 +1,31 @@
+{
+  "name": "persoonlijke-ai-nieuwspodcast",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "generate": "tsx scripts/generate.ts",
+    "generate:force": "tsx scripts/generate.ts --force",
+    "publish": "tsx scripts/publish.ts",
+    "setup:launchd": "tsx scripts/setup-launchd.ts",
+    "test:tts": "tsx scripts/test-tts.ts",
+    "validate:feed": "tsx scripts/validate-feed.ts",
+    "validate:public": "tsx scripts/validate-public.ts",
+    "doctor": "tsx scripts/doctor.ts"
+  },
+  "dependencies": {
+    "fast-xml-parser": "latest",
+    "music-metadata": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

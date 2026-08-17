@@ -1,0 +1,86 @@
+[
+  {
+    "name": "OpenAI News",
+    "url": "https://openai.com/news/rss.xml",
+    "kind": "primary",
+    "topics": ["OpenAI", "models", "agents", "developer tooling"]
+  },
+  {
+    "name": "OpenAI Research",
+    "url": "https://openai.com/research/rss.xml",
+    "kind": "primary",
+    "topics": ["OpenAI", "research", "models"]
+  },
+  {
+    "name": "Anthropic News",
+    "url": "https://www.anthropic.com/news/rss.xml",
+    "kind": "primary",
+    "topics": ["Anthropic", "Claude", "agents"]
+  },
+  {
+    "name": "Google AI Blog",
+    "url": "https://blog.google/technology/ai/rss/",
+    "kind": "primary",
+    "topics": ["Google", "Gemini", "AI"]
+  },
+  {
+    "name": "Google DeepMind Blog",
+    "url": "https://deepmind.google/discover/blog/rss.xml",
+    "kind": "primary",
+    "topics": ["DeepMind", "research", "models"]
+  },
+  {
+    "name": "Vercel Blog",
+    "url": "https://vercel.com/blog/rss.xml",
+    "kind": "primary",
+    "topics": ["Vercel", "AI SDK", "developer tooling"]
+  },
+  {
+    "name": "GitHub Blog AI",
+    "url": "https://github.blog/ai-and-ml/feed/",
+    "kind": "primary",
+    "topics": ["GitHub", "AI coding", "developer tooling"]
+  },
+  {
+    "name": "Simon Willison",
+    "url": "https://simonwillison.net/atom/everything/",
+    "kind": "secondary",
+    "topics": ["LLMs", "developer tooling", "open source AI"]
+  },
+  {
+    "name": "The Decoder",
+    "url": "https://the-decoder.com/feed/",
+    "kind": "secondary",
+    "topics": ["AI news", "models", "governance"]
+  },
+  {
+    "name": "VentureBeat AI",
+    "url": "https://venturebeat.com/category/ai/feed/",
+    "kind": "secondary",
+    "topics": ["AI news", "enterprise AI", "models"]
+  },
+  {
+    "name": "TechCrunch AI",
+    "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+    "kind": "secondary",
+    "topics": ["AI news", "startups", "tools"]
+  },
+  {
+    "name": "The Verge AI",
+    "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+    "kind": "secondary",
+    "topics": ["AI news", "tools", "governance"]
+  },
+  {
+    "name": "arXiv cs.AI",
+    "url": "https://export.arxiv.org/rss/cs.AI",
+    "kind": "primary",
+    "topics": ["research", "papers"]
+  },
+  {
+    "name": "arXiv cs.CL",
+    "url": "https://export.arxiv.org/rss/cs.CL",
+    "kind": "primary",
+    "topics": ["research", "language models"]
+  }
+]

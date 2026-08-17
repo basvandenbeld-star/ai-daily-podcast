@@ -1,0 +1,55 @@
+{
+  "title": "AI Daily voor Bas",
+  "description": "Een persoonlijke dagelijkse AI nieuwspodcast.",
+  "language": "nl-NL",
+  "author": "Bas van den Beld",
+  "timezone": "Europe/Amsterdam",
+  "publishAfterLocalHour": 5,
+  "targetMinutes": {
+    "min": 6,
+    "idealMin": 7,
+    "idealMax": 9,
+    "max": 10
+  },
+  "feedTokenEnv": "FEED_TOKEN",
+  "publicBaseUrlEnv": "PUBLIC_BASE_URL",
+  "siteDir": "docs",
+  "dataDir": ".data",
+  "tts": {
+    "engine": "macos-say",
+    "voice": "Xander",
+    "fallbackVoices": ["Ellen"],
+    "wordsPerMinute": 150,
+    "speechRate": 180
+  },
+  "interests": [
+    "OpenAI",
+    "Anthropic",
+    "Claude",
+    "Google Gemini",
+    "DeepMind",
+    "AI agents",
+    "Codex",
+    "Claude Code",
+    "AI coding",
+    "developer tooling",
+    "Vercel",
+    "AI SDK",
+    "open source AI",
+    "AI in onderwijs",
+    "AI literacy",
+    "AI governance",
+    "multimodal AI",
+    "voice AI"
+  ],
+  "lowerPriorityPatterns": [
+    "funding",
+    "raises",
+    "valuation",
+    "rumor",
+    "rumour",
+    "listicle",
+    "top 10",
+    "tools you need"
+  ]
+}

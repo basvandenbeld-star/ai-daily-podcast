@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>AI Daily voor Bas</title>
-  <link>https://example.invalid</link>
-  <atom:link href="https://example.invalid/feed/ad9a460712fff0ded47c19ac9b1ce2b1dae687b840feb62a/rss.xml" rel="self" type="application/rss+xml" />
+  <link>https://basvandenbeld-star.github.io/ai-daily-podcast</link>
+  <atom:link href="https://basvandenbeld-star.github.io/ai-daily-podcast/feed/ad9a460712fff0ded47c19ac9b1ce2b1dae687b840feb62a/rss.xml" rel="self" type="application/rss+xml" />
   <description>Een persoonlijke dagelijkse AI nieuwspodcast.</description>
   <language>nl-NL</language>
   <itunes:author>Bas van den Beld</itunes:author>
   <itunes:explicit>false</itunes:explicit>
   <itunes:block>Yes</itunes:block>
   <itunes:type>episodic</itunes:type>
-  <itunes:image href="https://example.invalid/assets/artwork.png" />
+  <itunes:image href="https://basvandenbeld-star.github.io/ai-daily-podcast/assets/artwork.png" />
   <image>
-    <url>https://example.invalid/assets/artwork.png</url>
+    <url>https://basvandenbeld-star.github.io/ai-daily-podcast/assets/artwork.png</url>
     <title>AI Daily voor Bas</title>
-    <link>https://example.invalid</link>
+    <link>https://basvandenbeld-star.github.io/ai-daily-podcast</link>
   </image>
-  <lastBuildDate>Mon, 17 Aug 2026 08:23:29 GMT</lastBuildDate>
+  <lastBuildDate>Mon, 17 Aug 2026 09:11:00 GMT</lastBuildDate>
 <item>
   <title>AI Daily, 17 augustus 2026</title>
-  <guid isPermaLink="false">ai-daily-2026-08-17-efd1d1c3-9965-4709-bbca-52e22bcfb658</guid>
-  <pubDate>Mon, 17 Aug 2026 08:23:23 GMT</pubDate>
+  <guid isPermaLink="false">ai-daily-2026-08-17-295fe5ba-a068-45fe-b03c-584243099884</guid>
+  <pubDate>Mon, 17 Aug 2026 09:10:56 GMT</pubDate>
   <description><![CDATA[<p>Persoonlijke AI-selectie. Geen advertenties, geen tracking.</p><h2>Not All Tokens Are Equal: Inflation-Aware Routing for Agentic LLM Systems</h2><p>Scores: impact 6, nieuwheid 7.5, betrouwbaarheid 9.3, relevantie 4.8, praktisch 6.3.</p><ul><li><a href="https://arxiv.org/abs/2608.13571">arXiv cs.AI: Not All Tokens Are Equal: Inflation-Aware Routing for Agentic LLM Systems</a></li><li><a href="https://arxiv.org/abs/2608.13900">arXiv cs.AI: Agentic Transaction: Towards ACID-Compliant Agent Systems</a></li></ul><h2>Script</h2><p>Goedemorgen. Dit is AI Daily voor 17 augustus 2026. Vandaag zijn er weinig harde, relevante AI-ontwikkelingen, dus ik houd het bewust compact.</p><p>1. Not All Tokens Are Equal: Inflation-Aware Routing for Agentic LLM Systems. Feitelijk: When a language model fails to answer a query on the first attempt, an agentic system retries, consuming additional tokens each time. This retry overhead creates a gap between what a model&apos;s per-token price implies and what a full workflow actually costs. We call this gap token inflation and define it as the ratio of true workflow cost to single-call... De bron is arXiv cs.AI. De praktische betekenis zit in de vraag of dit nieuwe mogelijkheden opent, of vooral een benchmarkverhaal is dat nog bewezen moet worden in dagelijks gebruik. De claim is redelijk controleerbaar, omdat er naast context ook een primaire of directe bron in de shownotes staat.</p><p>Dat was de selectie voor vandaag. De bronlinks staan in de shownotes, zodat je de claims snel zelf kunt controleren.</p>]]></description>
   <itunes:summary><![CDATA[Not All Tokens Are Equal: Inflation-Aware Routing for Agentic LLM Systems]]></itunes:summary>
   <itunes:duration>1:00</itunes:duration>
-  <enclosure url="https://example.invalid/audio/2026-08-17-ai-daily-17-augustus-2026.mp3" length="714755" type="audio/mpeg" />
+  <enclosure url="https://basvandenbeld-star.github.io/ai-daily-podcast/audio/2026-08-17-ai-daily-17-augustus-2026.mp3" length="714755" type="audio/mpeg" />
 </item>
 </channel>
 </rss>

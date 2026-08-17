@@ -9,6 +9,7 @@ loadEnvFile();
 const config = await readPodcastConfig();
 const token = process.env.FEED_TOKEN;
 if (!token) throw new Error("FEED_TOKEN is required.");
+const publicBaseUrl = process.env.PUBLIC_BASE_URL ? new URL(process.env.PUBLIC_BASE_URL) : undefined;
 
 const feedPath = path.resolve(config.siteDir, "feed", token, "rss.xml");
 const xml = await fs.readFile(feedPath, "utf8");
@@ -22,7 +23,11 @@ for (const item of items) {
     throw new Error(`Invalid RSS item: ${item.title ?? "untitled"}`);
   }
   const url = new URL(item.enclosure["@_url"]);
-  const localAudio = path.resolve(config.siteDir, url.pathname.replace(/^\//, ""));
+  const basePath = publicBaseUrl?.pathname.replace(/\/$/, "") ?? "";
+  const audioPath = basePath && url.pathname.startsWith(`${basePath}/`)
+    ? url.pathname.slice(basePath.length + 1)
+    : url.pathname.replace(/^\//, "");
+  const localAudio = path.resolve(config.siteDir, audioPath);
   const stat = await fs.stat(localAudio);
   if (String(stat.size) !== String(item.enclosure["@_length"])) {
     throw new Error(`Invalid RSS item: enclosure length mismatch for ${item.title ?? "untitled"}`);
